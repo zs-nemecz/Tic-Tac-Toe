@@ -1,5 +1,7 @@
 ### Missing functions
 # - save win history
+# - clear window function
+# - random selection of starting player before each game session (not before each game)
 
 import time
 import random
@@ -39,7 +41,7 @@ def take_input(player):
         move = input('Your move:\n')
         if (move in key_number.keys()):
             if board[key_number[move]] != '|   |':
-                print('\n'*50)
+                print('\n'*100)
                 display_board(board)
                 print('Position already occupied. Try again!')
                 time.sleep(0.5)
@@ -50,7 +52,7 @@ def take_input(player):
             input_accepted = True
             return move
         else:
-            print('\n'*50)
+            print('\n'*100)
             display_board(board)
             print('Unknown option. Please try again!')
             print('Press {} for moves, or h for Help and q to Quit.'.format(list(key_number.keys())))
@@ -99,7 +101,7 @@ def print_help():
     demo_board = new_board()
     demo_board[key_number['5']] = update_board(1)
     while (h == None):
-        print('\n'*50)
+        print('\n'*100)
         print('Press p to start the game.')
         print('When the game is on, enter a digit to select the location to place your marker.')
         display_board(help_board)
@@ -116,7 +118,10 @@ def print_help():
 def game_on():
     ongoing_game = True
     player = random.choice([1,2])
-    print('\n'*50)
+    print('\n'*10)
+    print('Randomly deciding which player starts...')
+    time.sleep(1.2)
+    print('\n'*100)
     display_board(board)
     while (ongoing_game):
         if player == 1:
@@ -137,14 +142,14 @@ def game_on():
                     ongoing_game = False
                     return action
                 else:
-                    print('\n'*50)
+                    print('\n'*100)
                     display_board(board)
                     move = take_input(player)
         if (move in list(key_number.keys())):
             register_move(player, move)
             print(players[player-1]['moves'])
             board[key_number[move]] = update_board(player)
-            print('\n'*50)
+            print('\n'*100)
             display_board(board)
             if (check_win(players, player, winning_combos)) or (check_draw(player1)):
                 ongoing_game = False
@@ -162,7 +167,7 @@ def select_option(accepted_input):
     if user_input in accepted_input:
         return user_input
     else:
-        print('\n'*50)
+        print('\n'*100)
         print('Unknown option. Please select again!')
         time.sleep(1.2)
         return 'x'
@@ -198,23 +203,23 @@ def assign_names(players):
 def quit_game():
     q = input('Are you sure you want to exit?\nPress y/n: ')
     if q.lower() == 'y' or q.lower() == 'yes':
-        print('\n'*50)
+        print('\n'*100)
         print('Goodbye')
         time.sleep(0.5)
         return False
     else:
-        print('\n'*50)
+        print('\n'*100)
         return True
 
 ################################################################################################################
 ################################################################################################################
 ################################################################################################################
 
-print('\n'*50)
+print('\n'*100)
 print('              Hello Players!')
 print('\n'*10)
 time.sleep(0.5)
-print('\n'*50)
+print('\n'*100)
 print('************This Is TiC TaC ToE!***************')
 print('\n'*10)
 time.sleep(0.5)
@@ -224,8 +229,8 @@ while(menu):
     players[0]['wins'] = 0
     players[1]['wins'] = 0
     action = 'x'
-    print('\n'*50)
-    print('OPTIONS\n[p] - Play\n[n] - Add Names\n[h] - Select marker: x/o\n[q] - Help\n[m] - Quit')
+    print('\n'*100)
+    print('OPTIONS\n[p] - Play\n[n] - Add Names\n[m] - Select marker: x/o\n[h] - Help\n[q] - Quit')
     action = select_option(accepted_input)
     while(action == 'p'):
         board = new_board()
@@ -240,7 +245,7 @@ while(menu):
             elif (player1['wins'] + player2['wins']) > 0:
                 print('That\'s a draw!')
         time.sleep(1.5)
-        print('\n'*50)
+        print('\n'*100)
     if (action == 'm'):
         assign_marker(players)
     elif (action == 'n'):
